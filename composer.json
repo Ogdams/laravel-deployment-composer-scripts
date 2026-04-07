@@ -1,6 +1,6 @@
 {
     "name": "reference/laravel-setup-live-snippet",
-    "description": "Do not require this package. Copy only the setup:live script below into your Laravel app composer.json.",
+    "description": "Copy these scripts into your Laravel app composer.json. Use setup:live for first production deploy; deploy:live for every deploy after that.",
     "license": "MIT",
     "scripts": {
         "setup:live": [
@@ -11,6 +11,14 @@
             "@php artisan key:generate",
             "php artisan migrate --force",
             "php artisan storage:link --force",
+            "php artisan optimize:clear",
+            "php artisan optimize"
+        ],
+        "deploy:live": [
+            "composer install --optimize-autoloader --no-dev",
+            "npm ci",
+            "npm run build",
+            "php artisan migrate --force",
             "php artisan optimize:clear",
             "php artisan optimize"
         ]
